@@ -1,5 +1,3 @@
-
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,64 +6,73 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-// command:  npx prisma migrate dev
-model Post {
-  id Int @id @default(autoincrement()) // primery key
-  title String
-  content String
-  published Boolean @default(false)
-  authorId Int 
-  author User @relation(fields: [authorId],references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  postCategory PostCategory[] //many to many
 
+// command:  npx prisma migrate dev
+// create post table
+// many to many realtion Ship with PostCategorie Table
+model Post {
+  id           Int            @id @default(autoincrement()) // primery key
+  title        String
+  content      String
+  published    Boolean        @default(false)
+  authorId     Int
+  author       User           @relation(fields: [authorId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  postCategory PostCategory[]
 
   @@map("posts")
-
 }
 
-model User{
-  id Int @id @default(autoincrement())
-  username String @unique
-  email String
-  role UserRole @default(user)
-  profile Profile? // one to one relation
-  post Post[] // one to many
-  
+//create user tabel 
+// One to One Relation Ship User Table
+model User {
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  email    String
+  role     UserRole @default(user)
+  age      Int      @default(18)
+  user     Profile?
+  post     Post[]
+
   @@map("users")
-  
-
 }
 
-model Profile{
- id Int @id @default(autoincrement())
- bio  String?
- userId Int @unique
- user User @relation(fields: [userId],references: [id])
- 
- @@map("profiles")
+//create profile table
+// One to One Relation Ship User Table
+model Profile {
+  id     Int     @id @default(autoincrement())
+  bio    String?
+  userId Int     @unique
+  user   User    @relation(fields: [userId], references: [id])
 
-}
-model Category{
- id Int @id @default(autoincrement())
- name String
- postCategory PostCategory[] // manay to many
-
- @@map("categories")
+  @@map("profiles")
 }
 
-// many to many connection table
-model PostCategory{
-  postId Int
-  post Post @relation(fields: [postId],references: [id])
+// create category Table 
+//Many to Many Relation Ship with Category Table
+model Category {
+  id           Int            @id @default(autoincrement())
+  name         String
+  postCategory PostCategory[]
+
+  @@map("category")
+}
+
+// create postCategory
+// many to many relation ship (Post And Categorie Table)
+model PostCategory {
+  postId     Int
+  post       Post     @relation(fields: [postId], references: [id])
   categoryId Int
-  category Category @relation(fields: [categoryId],references: [id])
-  @@id([postId,categoryId])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([postId, categoryId])
   @@map("post_categorie")
 }
+
+// enum 
 enum UserRole {
   user
   admin
-
 }
