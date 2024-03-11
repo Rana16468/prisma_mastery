@@ -38,7 +38,7 @@ async function main() {
 
   // cretae post
 
-  const createPost=await prisma.post.create({
+  /*const createPost=await prisma.post.create({
     data:{
         title:"this title 5",
         content:"this is content of the post 5",
@@ -56,8 +56,8 @@ async function main() {
     }
   });
 
-  console.log(createPost);
-;
+  console.log(createPost);*/
+
 
   
 

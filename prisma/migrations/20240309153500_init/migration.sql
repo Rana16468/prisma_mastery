@@ -34,11 +34,11 @@ CREATE TABLE "profiles" (
 );
 
 -- CreateTable
-CREATE TABLE "categories" (
+CREATE TABLE "category" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
 
-    CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "category_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -65,4 +65,4 @@ ALTER TABLE "profiles" ADD CONSTRAINT "profiles_userId_fkey" FOREIGN KEY ("userI
 ALTER TABLE "post_categorie" ADD CONSTRAINT "post_categorie_postId_fkey" FOREIGN KEY ("postId") REFERENCES "posts"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "post_categorie" ADD CONSTRAINT "post_categorie_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "post_categorie" ADD CONSTRAINT "post_categorie_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

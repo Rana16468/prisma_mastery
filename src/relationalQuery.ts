@@ -11,7 +11,7 @@ const relationalQuery=async()=>{
         
     }/*,include:{
         post:true
-    }*/}).profile();
+    }*/}).user();
 
    // console.log(result);
    // relational filter
